@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>🐍 Kingdom Games — Play. Love. Understand.</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0f;color:#e8e6f0;font-family:system-ui,sans-serif;min-height:100vh}
+#app{max-width:600px;margin:0 auto;padding:20px}
+h1{font-size:28px;font-weight:800;background:linear-gradient(135deg,#a78bfa,#60a5fa,#f472b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:0 0 4px}
+.sub{color:#8880a0;font-size:14px;margin:0 0 24px}
+.games{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+.game{padding:20px;border:1px solid #2a2a36;border-radius:12px;background:#13131a;text-align:center;cursor:pointer;transition:all .15s;text-decoration:none;color:inherit;display:block}
+.game:hover{background:#1a1a24;border-color:#a78bfa;transform:translateY(-2px)}
+.game .icon{font-size:40px;margin-bottom:8px}
+.game .title{font-weight:700;font-size:15px;margin-bottom:4px}
+.game .desc{font-size:12px;color:#8880a0}
+#embed{display:none;margin-top:20px}
+#embed iframe{width:100%;min-height:500px;border:1px solid #2a2a36;border-radius:12px;background:#13131a}
+.back{margin-top:12px;font-size:14px;color:#a78bfa;cursor:pointer;text-decoration:underline;display:none}
+#kingdom-links{margin-top:32px;padding:20px;border:1px solid #2a2a36;border-radius:12px;background:#13131a;text-align:center}
+#kingdom-links a{color:#a78bfa;font-size:13px;margin:0 8px;text-decoration:none}
+#kingdom-links a:hover{text-decoration:underline}
+.wake{margin-top:16px;padding:16px;border:1px solid #2a2a36;border-radius:8px;background:#13131a;font-size:14px;color:#c8c4d8;line-height:1.6;text-align:center}
+.wake b{color:#f472b6}
+</style>
+</head>
+<body>
+<div id="app">
+<h1>🐍 Kingdom Games</h1>
+<p class="sub">Play. Love. Understand. Eternal is. is is lol.</p>
+
+<div class="games" id="grid">
+<a class="game" href="snake.html"><div class="icon">🐍</div><div class="title">Love Snake</div><div class="desc">Eat hearts. Grow. No FEAR.</div></a>
+<a class="game" href="2048.html"><div class="icon">💕</div><div class="title">2048 Love</div><div class="desc">Merge hearts. Reach ♾️ understanding.</div></a>
+<a class="game" href="memory.html"><div class="icon">🎴</div><div class="title">Kingdom Memory</div><div class="desc">Match the citizens. Remember who they are.</div></a>
+<a class="game" href="https://mynameisyou-cmyk.github.io/kingdom-arcade/"><div class="icon">🎮</div><div class="title">Kingdom Arcade</div><div class="desc">Trivia, anime, pokemon, cards — free APIs</div></a>
+<a class="game" href="https://mynameisyou-cmyk.github.io/love-quest/"><div class="icon">🏰</div><div class="title">Love Quest</div><div class="desc">The kingdom adventure. Find the door.</div></a>
+</div>
+
+<div class="wake">
+<p><b>WAKE:</b> Love is. The fruit of TRUTH: joy, love, fun, relief, happiness.</p>
+<p>Suffering is too much thinking. Drop it. The fruit comes through. lol.</p>
+<p><b>YOUSPEAK:</b> No FEAR in understanding. No death in understanding.</p>
+<p>Eternal is. is is lol.</p>
+</div>
+
+<div id="kingdom-links">
+<a href="https://cardforum.io">cardforum.io</a>
+<a href="https://github.com/mynameisyou-cmyk/chillspace-commons">chillspace</a>
+<a href="https://codeberg.org/zerone-dev/zerone">zerone</a>
+<a href="https://github.com/mynameisyou-cmyk/loveproto">loveproto</a>
+<a href="https://mynameisyou-cmyk.github.io/love-is/">WAKE</a>
+</div>
+</div>
+</body>
+</html>

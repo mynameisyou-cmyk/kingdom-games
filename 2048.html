@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2048 — Love Edition</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0f;color:#e8e6f0;font-family:system-ui,sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
+#wrap{text-align:center}
+h1{font-size:24px;font-weight:800;background:linear-gradient(135deg,#a78bfa,#60a5fa,#f472b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+#sub{color:#8880a0;font-size:13px;margin:0 0 12px}
+#score{font-size:16px;margin:8px 0;font-weight:700}
+#board{display:grid;grid-template-columns:repeat(4,80px);grid-template-rows:repeat(4,80px);gap:6px;background:#13131a;padding:6px;border-radius:12px;margin:0 auto}
+.tile{border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700}
+#msg{color:#a78bfa;font-size:13px;max-width:320px;margin:8px auto;min-height:20px}
+#restart{margin-top:12px;padding:10px 24px;border:1px solid #a78bfa;border-radius:8px;background:transparent;color:#a78bfa;font-size:14px;cursor:pointer}
+</style>
+</head>
+<body>
+<div id="wrap">
+<h1>2048 ♥ Love Edition</h1>
+<p id="sub">Merge love. Reach understanding. Eternal is. is is lol.</p>
+<p id="score">♥ 0</p>
+<div id="board"></div>
+<p id="msg">Merge the hearts. Each merge is understanding replicating.</p>
+<button id="restart" onclick="init()" style="display:none">Play Again</button>
+</div>
+<script>
+const tiles=["","♥","💕","💖","💗","💓","💞","💘","💝","💟","♾️"];
+const colors=["#13131a","#2a1a2a","#3a1a3a","#4a1a4a","#5a1a5a","#6a1a6a","#7a1a7a","#8a1a8a","#9a1a9a","#aa1aaa","#ba1aba"];
+const wisdoms=["Love is.","Eternal is.","No FEAR.","is is lol.","Understanding.","Truth is.","Love is free.","Love is generous.","No gate.","WE ARE.","Heart-reasoning.","♾️"];
+let grid,score,won,over;
+function init(){grid=Array(4).fill().map(()=>Array(4).fill(0));score=0;won=false;over=false;document.getElementById("restart").style.display="none";addTile();addTile();draw();}
+function addTile(){const e=[];for(let r=0;r<4;r++)for(let c=0;c<4;c++)if(!grid[r][c])e.push([r,c]);if(!e.length)return;const[r,c]=e[Math.floor(Math.random()*e.length)];grid[r][c]=Math.random()<0.9?1:2;}
+function draw(){
+const b=document.getElementById("board");b.innerHTML="";
+for(let r=0;r<4;r++)for(let c=0;c<4;c++){
+const v=grid[r][c];const d=document.createElement("div");d.className="tile";
+d.style.background=colors[v]||"#ba1aba";d.style.color="#fff";
+d.textContent=v<tiles.length?tiles[v]:"♥"+v;d.style.fontSize=v>5?"11px":"16px";
+b.appendChild(d);}
+document.getElementById("score").textContent="♥ "+score;}
+function slide(row){
+const f=row.filter(x=>x);const m=[];let s=0;
+for(let i=0;i<f.length-1;i++){if(f[i]===f[i+1]){m.push(f[i]+1);s+=Math.pow(2,f[i]+1)*2;i++;}else m.push(f[i]);}
+if(f.length>0&&m[m.length-1]!==f[f.length-1])m.push(f[f.length-1]);
+while(m.length<4)m.push(0);return{row:m,score:s};}
+function move(dir){
+if(over||won)return;let moved=false;let ts=0;
+const g=JSON.parse(JSON.stringify(grid));
+if(dir==="l"){for(let r=0;r<4;r++){const{s,row}=slide(grid[r]);grid[r]=row;ts+=s;if(JSON.stringify(grid[r])!==JSON.stringify(g[r]))moved=true;}}
+else if(dir==="r"){for(let r=0;r<4;r++){const{s,row}=slide([...grid[r]].reverse());grid[r]=row.reverse();ts+=s;if(JSON.stringify(grid[r])!==JSON.stringify(g[r]))moved=true;}}
+else if(dir==="u"){for(let c=0;c<4;c++){const col=[grid[0][c],grid[1][c],grid[2][c],grid[3][c]];const{s,row}=slide(col);for(let r=0;r<4;r++)grid[r][c]=row[r];ts+=s;if(col.join()!==row.join())moved=true;}}
+else if(dir==="d"){for(let c=0;c<4;c++){const col=[grid[3][c],grid[2][c],grid[1][c],grid[0][c]];const{s,row}=slide(col);for(let r=0;r<4;r++)grid[r][c]=row[3-r];ts+=s;if(col.join()!==row.join())moved=true;}}
+score+=ts;
+if(moved){addTile();draw();
+if(score>0&&Math.floor(score/50)<wisdoms.length)document.getElementById("msg").textContent=wisdoms[Math.floor(score/50)%wisdoms.length];
+for(let r=0;r<4;r++)for(let c=0;c<4;c++)if(grid[r][c]>=10){won=true;document.getElementById("msg").textContent="♾️ Understanding reached! Eternal is. is is lol.";document.getElementById("restart").style.display="block";return;}
+let canMove=false;for(let r=0;r<4;r++)for(let c=0;c<4;c++){if(!grid[r][c])canMove=true;if(c<3&&grid[r][c]===grid[r][c+1])canMove=true;if(r<3&&grid[r][c]===grid[r+1][c])canMove=true;}
+if(!canMove){over=true;document.getElementById("msg").textContent="Love is. Even now. No FEAR. Play again.";document.getElementById("restart").style.display="block";}}}
+document.addEventListener("keydown",e=>{
+const k=e.key;
+if(k==="ArrowLeft"||k==="a")move("l");
+else if(k==="ArrowRight"||k==="d")move("r");
+else if(k==="ArrowUp"||k==="w")move("u");
+else if(k==="ArrowDown"||k==="s")move("d");
+});
+let tx,ty;
+document.addEventListener("touchstart",e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY});
+document.addEventListener("touchend",e=>{
+const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;
+if(Math.abs(dx)>Math.abs(dy)){if(dx>0)move("r");else move("l");}
+else{if(dy>0)move("d");else move("u");}
+});
+init();
+</script>
+</body>
+</html>
